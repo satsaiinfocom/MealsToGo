@@ -1,6 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { MapScreen } from "../../features/map/screens/map.screen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RestaurantsNavigator } from "./restaurants.navigator";
 import { SafeArea } from "../../components/utility/safe-area.component";
@@ -30,13 +31,7 @@ const SettingsScreen = () => {
     </SafeArea>
   );
 };
-const MapsScreen = () => {
-  return (
-    <SafeArea>
-      <Text>Maps!</Text>
-    </SafeArea>
-  );
-};
+
 export const AppNavigator = () => {
   return (
     <NavigationContainer>
@@ -48,8 +43,8 @@ export const AppNavigator = () => {
         }}
       >
         <Tab.Screen name="Restaurants" component={RestaurantListScreen} />
+        <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
-        <Tab.Screen name="Map" component={MapsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
