@@ -1,7 +1,7 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
 import { ThemeProvider } from "styled-components/native";
-
+import firebase from "firebase";
 import {
   useFonts as useOswald,
   Oswald_400Regular,
@@ -14,7 +14,19 @@ import { Navigation } from "./src/infrastructure/navigation";
 import { RestaurantsContextProvider } from "./src/services/restaurants/restaurants.context";
 import { LocationContextProvider } from "./src/services/location/location.context";
 import { FavouritesContextProvider } from "./src/services/favourites/favourites.context";
-
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCyW7W298gGzZovoGOAo74SvNA-aEWOmSw",
+  authDomain: "mealstogo-63693.firebaseapp.com",
+  projectId: "mealstogo-63693",
+  storageBucket: "mealstogo-63693.appspot.com",
+  messagingSenderId: "315938345949",
+  appId: "1:315938345949:web:d4842917cc504725201c34",
+};
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 export default function App() {
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
@@ -27,17 +39,18 @@ export default function App() {
   if (!oswaldLoaded || !latoLoaded) {
     return null;
   }
-
   return (
     <>
       <ThemeProvider theme={theme}>
-        <FavouritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantsContextProvider>
-              <Navigation />
-            </RestaurantsContextProvider>
-          </LocationContextProvider>
-        </FavouritesContextProvider>
+        <AuthenticationContextProvider>
+          <FavouritesContextProvider>
+            <LocationContextProvider>
+              <RestaurantsContextProvider>
+                <Navigation />
+              </RestaurantsContextProvider>
+            </LocationContextProvider>
+          </FavouritesContextProvider>
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
